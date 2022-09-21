@@ -377,7 +377,7 @@ MigrationBackup/
 FodyWeavers.xsd
 
 #VS Code
-.vscode
+.vscode/
 .vscode/tasks.json
 .vscode/launch.json
 
