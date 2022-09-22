@@ -6,6 +6,7 @@ import {
   import agent from "../../actions/agent";
   import { Course } from "../../models/course";
   import { PaginatedCourse } from "../../models/paginatedCourse";
+import { RootState } from "../store/configureStore";
   
   const coursesAdapter = createEntityAdapter<Course>();
   
@@ -41,3 +42,8 @@ import {
       });
     },
   });
+
+
+  export const coursesSelector = coursesAdapter.getSelectors(
+    (state: RootState) => state.course
+    );
