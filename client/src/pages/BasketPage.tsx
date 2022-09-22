@@ -3,15 +3,22 @@ import { Table } from 'antd'
 import agent from '../actions/agent'
 import * as FaIcons from 'react-icons/fa'
 import { Basket, CourseItem } from '../models/basket'
+import { useStoreContext } from '../context/StoreContext'
 
 const BasketPage = () => {
-  const [items, setItems] = useState<Basket | null>()
+  const [items, setItems] = useState<Basket | null>();
+
+  const { basket, removeItem } = useStoreContext();
+
+  const basketCount = basket?.items.length;
 
   const removeBasketItem = (courseId: string) => {
-    agent.Baskets.removeItem(courseId).catch((error) => {
-      console.log(error)
-    })
-  }
+    agent.Baskets.removeItem(courseId)
+      .then(() => removeItem(courseId))
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const newData = (items: Basket | null) => {
     items?.items.map((item: CourseItem, index: number) =>
@@ -21,10 +28,8 @@ const BasketPage = () => {
   }
 
   useEffect(() => {
-    agent.Baskets.get().then((response) => {
-      newData(response)
-    })
-  }, [])
+    newData(basket);
+  }, [basket]);
 
   const columns = [
     {
@@ -65,10 +70,15 @@ const BasketPage = () => {
     <>
       <div className="basket-page">
         <h1 className="basket-page__header">Shopping Cart</h1>
+        <h2 className="basket-page__sub-header">
+          {`${basketCount} ${
+            basketCount! > 1 ? "courses" : "course"
+          } in the Cart`}
+        </h2>
         <Table columns={columns} dataSource={items?.items} />
       </div>
     </>
-  )
-}
+  );
+};
 
 export default BasketPage
