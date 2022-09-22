@@ -4,6 +4,7 @@ import { Course } from '../models/course';
 import { PaginatedCourse } from '../models/paginatedCourse';
 
 axios.defaults.baseURL = 'http://localhost:5000/api';
+axios.defaults.withCredentials = true;
 
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 
@@ -25,9 +26,17 @@ const Categories = {
   getCategory: (id: number) => requests.get<Category>(`/categories/${id}`),
 }
 
+const Basket = {
+  get: () => requests.get("basket"),
+  addItem: (courseId: string) =>
+    requests.post(`basket?courseId=${courseId}`, {}),
+  removeItem: (courseId: string) => requests.del(`basket?courseId=${courseId}`),
+};
+
 const agent = {
   Courses,
   Categories,
+  Basket
 }
 
 export default agent
