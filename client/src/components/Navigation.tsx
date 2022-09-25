@@ -2,6 +2,7 @@ import React, { ChangeEvent, SyntheticEvent, useState } from "react";
 import * as FaIcons from "react-icons/fa";
 import { Link, useHistory } from "react-router-dom";
 import Logo from "../assets/Logo.png";
+import { removeBasket } from "../redux/slice/basketSlice";
 import { setCourseParams } from "../redux/slice/courseSlice";
 import { signOut } from "../redux/slice/userSlice";
 import { useAppSelector, useAppDispatch } from "../redux/store/configureStore";
@@ -19,6 +20,7 @@ const Navigation = () => {
 
   const signout = () => {
     dispatch(signOut());
+    dispatch(removeBasket());
     history.push("/");
   };
 
