@@ -4,9 +4,14 @@ import { ChangeEvent, SyntheticEvent, useState } from "react";
 import agent from "../actions/agent";
 import { Register } from "../models/user";
 
+
+interface Props {
+    toggleRegister: () => void;
+  }
+
 const { Text, Title } = Typography;
 
-const RegisterComponent = () => {
+const RegisterComponent = ({toggleRegister}: Props) => {
   const [values, setValues] =
     useState <
     Register >
@@ -107,7 +112,7 @@ const RegisterComponent = () => {
             </Form.Item>
           </Form>
         </Content>
-        <div className="log-in-card__toggle">Already a User? Sign in</div>
+        <div onClick={toggleRegister} className="log-in-card__toggle">Already a User? Sign in</div>
       </Card>
     </>
   );
