@@ -4,6 +4,7 @@ import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { useAppDispatch } from "../redux/store/configureStore";
 import { Login } from "../models/user";
 import { signInUser } from "../redux/slice/userSlice";
+import { useHistory } from "react-router-dom";
 
 const { Text, Title } = Typography;
 
@@ -28,6 +29,8 @@ const Signin = ({ toggleRegister }: Props) => {
     form.resetFields();
   };
 
+  const history = useHistory();
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setValues({ ...values, [name]: value });
@@ -38,6 +41,7 @@ const Signin = ({ toggleRegister }: Props) => {
     try {
       if (email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/) && password.length >= 6) {
         await dispatch(signInUser(values));
+        history.push("/profile");
       }
       resetForm();
     } catch (err: any) {

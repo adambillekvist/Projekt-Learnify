@@ -4,6 +4,7 @@ import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { useAppDispatch } from "../redux/store/configureStore";
 import { Register } from "../models/user";
 import { registerUser } from "../redux/slice/userSlice";
+import { useHistory } from "react-router-dom";
 
 const { Text, Title } = Typography;
 
@@ -33,6 +34,8 @@ const RegisterComponent = ({ toggleRegister }: Props) => {
     form.resetFields();
   };
 
+  const history = useHistory();
+
   const submitUser = async (e: SyntheticEvent) => {
     e.preventDefault();
     try {
@@ -42,6 +45,7 @@ const RegisterComponent = ({ toggleRegister }: Props) => {
         username.length >= 5
       ) {
         await dispatch(registerUser(values));
+        history.push("/profile");
       }
       resetForm();
     } catch (err: any) {

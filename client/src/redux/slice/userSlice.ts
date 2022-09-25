@@ -16,7 +16,6 @@ export const signInUser = createAsyncThunk<User, Login>(
     try {
       const user = await agent.Users.login(data);
       localStorage.setItem("user", JSON.stringify(user));
-
       return user;
     } catch (err: any) {
       return thunkAPI.rejectWithValue({ error: err });
@@ -45,6 +44,12 @@ export const userSlice = createSlice({
       state.user = null;
       localStorage.removeItem("user");
     },
+    getUser: (state) => {
+      const user = localStorage.getItem("user");
+      if (user) {
+        state.user = JSON.parse(user);
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addMatcher(
@@ -62,4 +67,4 @@ export const userSlice = createSlice({
   },
 });
 
-export const { signOut } = userSlice.actions;
+export const { signOut, getUser } = userSlice.actions;
