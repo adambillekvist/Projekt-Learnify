@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import DetailPage from './pages/DetailPage';
 import Homepage from './pages/Homepage';
@@ -12,33 +12,43 @@ import DescriptionPage from './pages/DescriptionPage';
 import BasketPage from './pages/BasketPage';
 import { useAppDispatch } from './redux/store/configureStore';
 import { fetchBasketAsync } from './redux/slice/basketSlice';
-import Dashboard from './pages/Dashboard';;
+import Dashboard from './pages/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
 import CheckoutPage from './pages/CheckoutPage';
 import { fetchCurrentUser } from './redux/slice/userSlice';
+import Loading from './components/Loading';
 
 function App() {
-
   const dispatch = useAppDispatch();
+  const [loading, setLoading] = useState(true);
 
-
+  const appInit = useCallback(async () => {
+    try {
+      await dispatch(fetchBasketAsync());
+      await dispatch(fetchCurrentUser());
+    } catch (error: any) {
+      console.log(error);
+    }
+  }, [dispatch]);
 
   useEffect(() => {
-    dispatch(fetchBasketAsync());
-    dispatch(fetchCurrentUser());
-  }, [dispatch]);
+    appInit().then(() => setLoading(false));
+  }, [appInit]);
+
+  if (loading) return <Loading />;
+
   return (
     <>
     <Navigation/>
     <Route exact path="/" component={Categories} />
-      <Switch>
+    <Switch>
         <Route exact path="/" component={Homepage} />
-        <Route exact path="/course/:id" component={DescriptionPage} />
-        <PrivateRoute exact path="/profile" component={Dashboard} />
         <Route exact path="/category/:id" component={CategoryPage} />
+        <Route exact path="/basket" component={BasketPage} />
+        <Route exact path="/course/:id" component={DescriptionPage} />
         <Route exact path="/login" component={LoginPage} />
         <Route exact path="/detail" component={DetailPage} />
-        <Route exact path="/basket" component={BasketPage} />
+        <PrivateRoute exact path="/profile" component={Dashboard} />
         <PrivateRoute exact path="/checkout" component={CheckoutPage} />
       </Switch>
     </>
