@@ -49,6 +49,7 @@ const CheckoutPage = () => {
         },
       )
       if (paymentResult.paymentIntent?.status === 'succeeded') {
+        await agent.Users.addCourse();
         notification.success({
           message: 'Your payment is successful',
         })
@@ -112,7 +113,7 @@ const CheckoutPage = () => {
           </Card>
         </div>
         <div className="checkout__summary">
-          <CheckoutSummary />
+          <CheckoutSummary handleSubmit={handlePayment} stripe={stripe} />
         </div>
       </div>
     </>
