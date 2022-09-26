@@ -69,9 +69,9 @@ const Signin = ({ toggleRegister }: Props) => {
             labelCol={{ span: 8 }}
             wrapperCol={{ span: 16 }}
             autoComplete="off"
-            // onSubmitCapture={submitUser}
+            onSubmitCapture={submitUser}
             initialValues={values}
-            onFinish={submitUser}
+            // onFinish={submitUser}
             form={form}
           >
             <Form.Item

@@ -3,14 +3,16 @@ using System;
 using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(StoreContext))]
-    partial class StoreContextModelSnapshot : ModelSnapshot
+    [Migration("20220926090518_PaymentIntentAdded")]
+    partial class PaymentIntentAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -229,21 +231,6 @@ namespace Infrastructure.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("Entity.UserCourse", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("CourseId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("UserId", "CourseId");
-
-                    b.HasIndex("CourseId");
-
-                    b.ToTable("UserCourses");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -272,15 +259,15 @@ namespace Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a5f20980-7afd-4de8-841e-3f4dfb46311a",
-                            ConcurrencyStamp = "39cc1b29-fbad-4c37-82d6-9e548b555519",
+                            Id = "e01d04b5-c7b6-42e3-9e21-a2d830e6bcfa",
+                            ConcurrencyStamp = "15852c46-4c08-45c1-b70b-a5bf677d27f3",
                             Name = "Student",
                             NormalizedName = "STUDENT"
                         },
                         new
                         {
-                            Id = "9cb39229-090d-4f88-bcc5-fe8438f60c83",
-                            ConcurrencyStamp = "318f598a-4625-45ef-ad17-30e542ad03bb",
+                            Id = "14d4cba3-a00a-425a-946b-e9ae88bdf0de",
+                            ConcurrencyStamp = "30d74a18-0fcf-4b51-9136-fa249a3f0ded",
                             Name = "Instructor",
                             NormalizedName = "INSTRUCTOR"
                         });
@@ -440,25 +427,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("course");
                 });
 
-            modelBuilder.Entity("Entity.UserCourse", b =>
-                {
-                    b.HasOne("Entity.Course", "Course")
-                        .WithMany("UserCourses")
-                        .HasForeignKey("CourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Entity.User", "User")
-                        .WithMany("UserCourses")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Course");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -525,13 +493,6 @@ namespace Infrastructure.Migrations
                     b.Navigation("Learnings");
 
                     b.Navigation("Requirements");
-
-                    b.Navigation("UserCourses");
-                });
-
-            modelBuilder.Entity("Entity.User", b =>
-                {
-                    b.Navigation("UserCourses");
                 });
 #pragma warning restore 612, 618
         }

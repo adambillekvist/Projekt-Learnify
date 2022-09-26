@@ -9,6 +9,8 @@ namespace Entity
         public int Id { get; set; }
 
         public string ClientId { get; set; }
+        public string PaymentIntentId { get; set; }
+        public string ClientSecret { get; set; }
 
         public List<BasketItem> Items { get; set; } = new List<BasketItem>();
 
@@ -24,6 +26,13 @@ namespace Entity
         {
             var course = Items.FirstOrDefault(item => item.CourseId == courseId);
             Items.Remove(course);
+        }
+
+        public void ClearBasket()
+        {
+            PaymentIntentId = null;
+            ClientSecret = null;
+            Items.Clear();
         }
     }
 }

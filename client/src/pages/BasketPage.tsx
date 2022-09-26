@@ -74,7 +74,7 @@ const BasketPage = () => {
                 {' '}
                 $ {total ? total : 0}{' '}
               </div>
-              <Link to="/basket">
+              <Link to="/checkout">
                 <div className="basket-page__body__summary__checkout">
                   {' '}
                   Checkout{' '}
