@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 
 namespace API.Controllers
 {
@@ -140,6 +141,16 @@ namespace API.Controllers
 
             await _userManager.AddToRoleAsync(user, "Instructor");
             return Ok();
+        }
+
+        [Authorize]
+        [HttpGet("unpublishedCourses")]
+
+        public List<Course> unpublishedCourses()
+        {
+            var courses = _context.Courses.Where(x => x.Instructor == User.Identity.Name).Where(x => x.Published == false).ToList();
+
+            return courses;
         }
 
         private async Task<Basket> ExtractBasket(string clientId)
