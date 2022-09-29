@@ -1,4 +1,4 @@
-import { Button, Card, Form, Input, notification, Typography } from "antd";
+import { Button, Card, Form, Input, Typography } from "antd";
 import { Content } from "antd/lib/layout/layout";
 import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { useAppDispatch } from "../redux/store/configureStore";
@@ -45,9 +45,7 @@ const Signin = ({ toggleRegister }: Props) => {
       }
       resetForm();
     } catch (err: any) {
-      notification.error({
-        message: "Please check your email or password",
-      });
+      console.log(err)
       resetForm();
     }
   };
@@ -71,7 +69,6 @@ const Signin = ({ toggleRegister }: Props) => {
             autoComplete="off"
             onSubmitCapture={submitUser}
             initialValues={values}
-            // onFinish={submitUser}
             form={form}
           >
             <Form.Item

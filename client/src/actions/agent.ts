@@ -1,13 +1,18 @@
-import axios, { AxiosResponse } from "axios";
+import { notification } from "antd";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { Store } from "redux";
 import { Basket } from "../models/basket";
 import { Category } from "../models/category";
 import { Course } from "../models/course";
+import { Lecture } from "../models/lecture";
 import { PaginatedCourse } from "../models/paginatedCourse";
 import { Login, Register, User } from "../models/user";
 
 
 axios.defaults.baseURL = "http://localhost:5000/api";
+
+const responseBody = <T>(response: AxiosResponse<T>) => response.data;
+
 axios.defaults.withCredentials = true;
 
 export const axiosInterceptor = (store: Store) => {
@@ -18,7 +23,52 @@ export const axiosInterceptor = (store: Store) => {
   });
 };
 
-const responseBody = <T>(response: AxiosResponse<T>) => response.data;
+axios.interceptors.response.use((response) => {
+  return response;
+},
+(error: AxiosError) => {
+  const { data, status }: AxiosResponse = error.response!;
+  switch (status) {
+    case 400:
+      if (data.errors) {
+        const validationErrors: string[] = [];
+        for (const key in data.errors) {
+          if (data.errors[key]) {
+            validationErrors.push(data.errors[key]);
+          }
+        }
+        throw validationErrors.flat();
+      }
+      notification.error({
+        message: data.errorMessage,
+      });
+      break;
+    case 401:
+      notification.error({
+        message: data.errorMessage,
+      });
+      break;
+    case 403:
+      notification.error({
+        message: 'You are not allowed to do that!',
+      });
+      break;
+    case 404:
+      notification.error({
+        message: data.errorMessage,
+      });
+      break;
+    case 500:
+      notification.error({
+        message: 'Server error, try again later',
+      });
+      break;
+    default:
+      break;
+  }
+  return Promise.reject(error.response);
+},
+);
 
 const requests = {
   get: <T>(url: string, params?: URLSearchParams) =>
@@ -60,12 +110,18 @@ const Payments = {
   paymentIntent: () => requests.post<Basket>("payments", {}),
 };
 
+const Lectures  = {
+  getLectures: (courseId: string) => requests.get<Lecture>(`lectures/${courseId}`),
+  setCurrentLecture: (values: {lectureId: number, courseId: string}) => requests.put('lectures/setCurrentLecture', values),
+};
+
 const agent = {
   Courses,
   Categories,
   Baskets,
   Users,
   Payments,
+  Lectures,
 };
 
 export default agent;
