@@ -3,8 +3,8 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 import { Store } from "redux";
 import { Basket } from "../models/basket";
 import { Category } from "../models/category";
-import { Course } from "../models/course";
-import { Lecture } from "../models/lecture";
+import { Course, RegisterCourse } from "../models/course";
+import { Lecture, LectureDto } from "../models/lecture";
 import { PaginatedCourse } from "../models/paginatedCourse";
 import { Login, Register, User } from "../models/user";
 
@@ -84,12 +84,17 @@ const Users = {
   register: (values: Register) => requests.post<User>("users/register", values),
   addCourse: () => requests.post("users/purchaseCourses", {}),
   currentUser: () => requests.get<User>("users/currentUser"),
+  addRole: () => requests.post('users/addRole', {}),
+  unpublishedCourses: () => requests.get<Course[]>('users/unpublishedCourses'),
 };
 
 const Courses = {
   list: (params?: URLSearchParams) =>
     requests.get<PaginatedCourse>("courses", params),
   getById: (id: string) => requests.get<Course>(`courses/${id}`),
+  create: (data: RegisterCourse) => requests.post < string > ('courses', data),
+  publish: (courseId: string) =>
+  requests.post < string > (`courses/publish/${courseId}`, {}),
 };
 
 const Categories = {
@@ -113,6 +118,11 @@ const Payments = {
 const Lectures  = {
   getLectures: (courseId: string) => requests.get<Lecture>(`lectures/${courseId}`),
   setCurrentLecture: (values: {lectureId: number, courseId: string}) => requests.put('lectures/setCurrentLecture', values),
+  create: (data: {
+    courseId: string,
+    sectionName: string,
+    lectures: LectureDto[],
+  }) => requests.post < string > ('lectures', data),
 };
 
 const agent = {
