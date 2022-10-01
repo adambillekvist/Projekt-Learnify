@@ -41,7 +41,13 @@
       }
   
       .ant-btn-primary {
-        background-color: $color-primary;
+        background-color: #4036b6;
+        width: 100%;
+      }
+
+      .ant-btn-primary:hover{
+        background-color: #261e7d;
+        color:#fa6132;
         width: 100%;
       }
     }
