@@ -178,3 +178,32 @@
 .dropdown {
   cursor: pointer;
 }
+
+//Shopping cart
+.ant-table-tbody>tr>td {
+  background-color: aliceblue;
+}
+
+// Vertical animation
+.flipX {
+  animation: 7s anim-flipX ease infinite;
+}
+@keyframes anim-flipX {
+  0% {
+    opacity: 0;
+    transform: rotateX(90def);
+  }
+  50% {
+    opacity: 1;
+    transform: rotateX(720deg);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateX(720deg);
+  }
+}
+
+//Sorting items
+.ant-card-head {
+  background-color: rgb(150, 205, 209) !important;
+}

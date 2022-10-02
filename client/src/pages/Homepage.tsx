@@ -46,7 +46,7 @@ const Homepage = () => {
   return (
     <div className="course">
       <div className="course__header">
-        <h1>What to learn Next?</h1>
+        <h1 className='flipX'>What to learn Next?</h1>
         <h2>New Courses picked just for you...</h2>
       </div>
       <Row gutter={[24, 32]}>

@@ -29,7 +29,7 @@ const CategoryPage = () => {
             return <ShowCourses key={index} course={course} />;
           })
         ) : (
-          <h1>No courses found in this Category!</h1>
+          <h1>No courses found in this Category! 😔</h1>
         )}
       </Row>
     </div>

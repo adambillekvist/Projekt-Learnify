@@ -7,14 +7,14 @@ $bp-large: 62.5em; // 1000px
 $bp-medium: 50em; // 800px;
 $bp-small: 37.5em; // 600px;
 
-// Colors
-$color-grey-light-1: #f9f7f6;
+//NEW COLORS
+$color-grey-light-1: #8cc4c4;
 $color-grey-light-2: #aaa;
-$color-grey-dark-1: #54483a;
+$color-grey-dark-1: #000000;
 $color-grey-dark-2: #6d5d4b;
 
-$color-primary: #261e7d;
-$color-primary-dark: #0e0545;
+$color-primary: #F44B4B;
+$color-primary-dark: #15a8a8;
 
 // COLOR VARIABLES
 $color-secondary-light: #ffcc00;
@@ -35,4 +35,5 @@ html {
 
 body {
   font-family: $font-primary, sans-serif;
+  background-color: #e2ffff !important;
 }
